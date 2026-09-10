@@ -74,9 +74,3 @@ SATA connector, +Z up (label side).
 connector) → NAND / DRAM / MJX → thermal pad → top shell → front label.
 
 ---
-
-## Reference asset reviewed (not reused)
-
-`storage_ssd_hdd_m.2.glb` — Sketchfab, *"Storage (SSD, HDD, M.2)"* by Blue Lantern,
-CC-BY-4.0. Used only as a subject/scale sanity check and quality benchmark. No
-geometry, UVs, or textures from it are used in this build.
