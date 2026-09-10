@@ -1,0 +1,388 @@
+<title>970 EVO Modeling Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f3f1ec; --surface:#ffffff; --surface-2:#eae7df;
+  --ink:#16171a; --muted:#5c6068; --line:#d7d3c9;
+  --accent:#d5641a; --accent-ink:#fff8f2;
+  --measure:40rem; --wide:70rem;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#101113; --surface:#17191c; --surface-2:#1d2024;
+  --ink:#ecedef; --muted:#8b9098; --line:#2b2f34;
+  --accent:#ec7a30; --accent-ink:#141007;
+}}
+:root[data-theme="dark"]{
+  --bg:#101113; --surface:#17191c; --surface-2:#1d2024;
+  --ink:#ecedef; --muted:#8b9098; --line:#2b2f34;
+  --accent:#ec7a30; --accent-ink:#141007;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--f-body);font-size:15px;line-height:1.62;
+  font-feature-settings:"kern";
+}
+.wrap{max-width:var(--wide);margin:0 auto;padding:0 clamp(20px,5vw,56px)}
+.col{max-width:var(--measure)}
+h1,h2,h3{font-family:var(--f-display);font-weight:800;line-height:1.1;text-wrap:balance;letter-spacing:-0.015em;margin:0}
+p{margin:0 0 1.05em}
+a{color:inherit;text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:1px}
+a:hover{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.16em;color:var(--muted)}
+.mono{font-family:var(--f-mono)}
+hr{border:0;border-top:1px solid var(--line);margin:0}
+
+/* ---------- masthead ---------- */
+header{padding:clamp(48px,9vw,104px) 0 40px}
+.kicker{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.kicker .tick{width:26px;height:2px;background:var(--accent)}
+h1{font-size:clamp(38px,7.2vw,68px);letter-spacing:-0.03em}
+h1 .evo{color:var(--accent)}
+.lede{font-size:clamp(17px,2.3vw,21px);color:var(--muted);max-width:34rem;margin-top:22px}
+.byline{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);margin-top:22px;line-height:1.9}
+.byline b{color:var(--ink);font-weight:500}
+.prepared{display:flex;align-items:center;gap:16px;margin-top:32px;padding-top:22px;border-top:1px solid var(--line);max-width:34rem}
+.monogram{flex:none;width:46px;height:46px;border:1px solid var(--line);border-radius:6px;
+  display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:17px;
+  letter-spacing:0.04em;color:var(--ink)}
+.prepared .who{font-family:var(--f-display);font-weight:600;font-size:15px;color:var(--ink)}
+.prepared .who .accent{color:var(--accent)}
+.prepared .meta{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.7}
+
+/* ---------- sections ---------- */
+section{padding:56px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:18px;align-items:baseline;margin-bottom:30px}
+.sec-num{font-family:var(--f-mono);font-size:13px;color:var(--accent);font-weight:500;flex:none;padding-top:4px}
+.sec-head h2{font-size:clamp(23px,3.4vw,32px)}
+.sec-head .col{margin:0}
+
+/* ---------- figures ---------- */
+figure{margin:0}
+.fig{margin:30px 0 10px}
+.fig img,.fig video{display:block;width:100%;height:auto;border:1px solid var(--line);background:var(--surface-2);border-radius:3px}
+figcaption{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-top:10px;letter-spacing:.02em}
+figcaption b{color:var(--ink);font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:680px){.grid2,.grid3{grid-template-columns:1fr}}
+
+/* ---------- toggle ---------- */
+.viewer{position:relative}
+.viewer .layer{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s ease}
+.viewer .layer.on{opacity:1}
+.viewer .base{position:static;opacity:1}
+@media (prefers-reduced-motion:reduce){.viewer .layer{transition:none}}
+.switch{display:inline-flex;border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:14px 0 0}
+.switch button{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  padding:7px 14px;background:var(--surface);color:var(--muted);border:0;cursor:pointer;border-right:1px solid var(--line)}
+.switch button:last-child{border-right:0}
+.switch button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+
+/* ---------- spec table ---------- */
+.spec{width:100%;border-collapse:collapse;font-family:var(--f-mono);font-size:13px;margin:8px 0 4px}
+.spec th,.spec td{text-align:left;padding:9px 14px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.spec th{color:var(--muted);font-weight:400;white-space:nowrap;width:40%}
+.spec td{color:var(--ink);font-variant-numeric:tabular-nums}
+.spec tr:last-child th,.spec tr:last-child td{border-bottom:0}
+
+/* ---------- dimension drawing ---------- */
+.dwg{width:100%;border:1px solid var(--line);border-radius:3px;background:var(--surface);display:block}
+.dwg text{font-family:var(--f-mono);font-size:11px;fill:var(--muted)}
+.dwg .val{fill:var(--ink);font-size:12px}
+.dwg .part{fill:none;stroke:var(--ink);stroke-width:1.4}
+.dwg .hatch{fill:var(--surface-2)}
+.dwg .dim{stroke:var(--accent);stroke-width:1}
+.dwg .ext{stroke:var(--line);stroke-width:1}
+.dwg .lead{stroke:var(--muted);stroke-width:1}
+
+/* ---------- callout list ---------- */
+.notes{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:2px}
+.notes li{display:grid;grid-template-columns:132px 1fr;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
+.notes li:first-child{border-top:1px solid var(--line)}
+.notes .k{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding-top:2px}
+@media (max-width:600px){.notes li{grid-template-columns:1fr;gap:3px}}
+
+/* ---------- stat row ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:26px 0 6px}
+.stats div{background:var(--surface);padding:16px 18px}
+.stats .n{font-family:var(--f-display);font-weight:700;font-size:23px;font-variant-numeric:tabular-nums}
+.stats .l{font-family:var(--f-mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+@media (max-width:640px){.stats{grid-template-columns:1fr 1fr}}
+
+/* ---------- deliverables ---------- */
+.deliv{columns:2;column-gap:36px;font-size:14px;margin:18px 0 0}
+.deliv p{break-inside:avoid;margin:0 0 .7em;padding-left:18px;text-indent:-18px}
+.deliv p::before{content:"—  ";color:var(--accent)}
+@media (max-width:600px){.deliv{columns:1}}
+
+footer{border-top:1px solid var(--line);padding:44px 0 72px;font-size:12.5px;color:var(--muted);font-family:var(--f-mono);line-height:1.9}
+footer p{max-width:52rem}
+
+@media print{
+  :root{--bg:#fff;--ink:#000;--surface:#fff;--surface-2:#f2f2f2;--line:#bbb;--muted:#444}
+  header{padding:0 0 20px}.fig video{display:none}
+  section{padding:22px 0;break-inside:avoid}
+  .switch,.viewer .layer{display:none}
+}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="kicker"><span class="tick"></span><span class="eyebrow">Modeling study · Storage media</span></div>
+  <h1>Samsung 970&nbsp;<span class="evo">EVO</span><br>modeling study</h1>
+  <p class="lede">An M.2&nbsp;2280 NVMe SSD rebuilt from the manufacturer datasheet — accurate to a
+  tenth of a millimetre, its semiconductors modeled as real packages, and prepped to animate cleanly.</p>
+  <p class="byline">
+    Sample piece for <b>3D Modeler — Electrical Component Models &amp; Renders</b><br>
+    Subject: <b>Samsung SSD 970 EVO 500&nbsp;GB</b> · MZ-V7E500 · Rev 1.0 datasheet, Apr 2018<br>
+    Modeled &amp; rendered in <b>Blender</b> · <b>no manufacturer geometry, textures, or photos used</b>
+  </p>
+  <div class="prepared">
+    <div class="monogram" aria-hidden="true">EE</div>
+    <div>
+      <div class="who">Prepared for <span class="accent">EETech</span></div>
+      <div class="meta">for All About Circuits / EEPower video production<br>
+        attn. Adam LaBarbera · September 2026</div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="sec-head"><span class="sec-num">§01</span>
+    <div class="col"><h2>The brief, read back</h2></div></div>
+  <div class="col">
+    <p>The posting asks for accurate models and photoreal renders of electrical devices — chips and
+    semiconductors, converters, memory and storage media, connectors — built to hold up under close-up
+    camera moves and to animate cleanly, working from technical drawings and datasheets.</p>
+    <p>Storage media is one of those categories, so this piece takes a single representative part all the
+    way: a datasheet-accurate model, a materials pass, an engineering-style dimension drawing, and the
+    turntable / exploded / macro shots the posting calls out — end to end, the way a real delivery would run.</p>
+    <p>One model covers three of the four categories at once: the <b>storage device</b> itself, the
+    <b>semiconductors</b> on its board (controller, DRAM, V-NAND — each a modeled BGA package, not a decal),
+    and the <b>M-key edge connector</b>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">§02</span>
+    <div class="col"><h2>Dimensions &amp; form factor</h2></div></div>
+  <div class="col">
+    <p>Every measurement below is taken from the <span class="mono">Samsung V-NAND SSD 970 EVO Data
+    Sheet, Rev 1.0</span> and the JEDEC M.2 form-factor spec. The model is built in millimetres at 1:1, origin
+    on the mounting-notch centre, so it drops into a scene at true scale next to anything else.</p>
+  </div>
+
+  <figure class="fig col" style="max-width:var(--wide)">
+    <svg class="dwg" viewBox="0 0 900 366" role="img" aria-label="Dimensioned top-view drawing of the M.2 2280 module">
+      <!-- 1 mm = 9.6 px -> board 769.4 x 212.6 ; group origin (86,74) -->
+      <g transform="translate(86,74)">
+        <path class="part" d="
+          M 4,0 L 769,0
+          L 769,95 L 757,95 L 757,107.6 L 769,107.6 L 769,212.6
+          L 4,212.6 Q 0,212.6 0,208.6 L 0,124
+          A 15,15 0 0 0 0,88.6
+          L 0,4 Q 0,0 4,0 Z"/>
+        <line class="lead" x1="722" y1="6" x2="722" y2="206.6" stroke-dasharray="5 3"/>
+        <!-- overall length dim -->
+        <line class="ext" x1="0" y1="212.6" x2="0" y2="244"/>
+        <line class="ext" x1="769" y1="212.6" x2="769" y2="244"/>
+        <line class="dim" x1="0" y1="238" x2="769" y2="238"/>
+        <path fill="var(--accent)" d="M0,238 l9,-4 v8 z M769,238 l-9,-4 v8 z"/>
+        <text class="val" x="384" y="257" text-anchor="middle">80.15</text>
+        <!-- overall width dim -->
+        <line class="ext" x1="4" y1="0" x2="-42" y2="0"/>
+        <line class="ext" x1="0" y1="212.6" x2="-42" y2="212.6"/>
+        <line class="dim" x1="-34" y1="0" x2="-34" y2="212.6"/>
+        <path fill="var(--accent)" d="M-34,0 l-4,9 h8 z M-34,212.6 l-4,-9 h8 z"/>
+        <text class="val" x="-48" y="110" text-anchor="middle" transform="rotate(-90 -48,110)">22.15</text>
+        <!-- M-key notch callout -->
+        <line class="lead" x1="763" y1="101" x2="763" y2="-32"/>
+        <text x="785" y="-36" text-anchor="end">M-key notch · 1.2</text>
+        <!-- contact-band callout -->
+        <line class="lead" x1="722" y1="150" x2="636" y2="-32"/>
+        <text x="632" y="-36" text-anchor="end">contact band · 0.5 pitch</text>
+        <!-- mount half-hole callout -->
+        <line class="lead" x1="2" y1="106" x2="74" y2="-32"/>
+        <text x="78" y="-36">&Oslash;3 mount half-hole</text>
+        <text x="78" y="-21">on centreline · model origin</text>
+      </g>
+      <text x="86" y="350">TOP VIEW · module 2.38 over the label · PCB 0.8 &plusmn;10% · dimensions mm</text>
+    </svg>
+    <figcaption><b>Fig. 1</b> — Engineering drawing from the datasheet. The model matches this outline exactly.</figcaption>
+  </figure>
+
+  <div class="col">
+    <table class="spec">
+      <tr><th>Overall (L × W × H)</th><td>80.15 × 22.15 × 2.38 mm</td></tr>
+      <tr><th>PCB thickness</th><td>0.80 mm ±10%  (JEDEC M.2)</td></tr>
+      <tr><th>Form factor / key</th><td>M.2 2280, M-key, single-sided</td></tr>
+      <tr><th>Interface</th><td>PCIe Gen 3.0 ×4 · NVMe 1.3</td></tr>
+      <tr><th>Controller</th><td>Samsung Phoenix — 12 × 12 mm, nickel-plated lid</td></tr>
+      <tr><th>DRAM</th><td>512 MB LPDDR4 — 10 × 11 mm</td></tr>
+      <tr><th>NAND</th><td>Samsung V-NAND 3-bit MLC — 2 × TFBGA ≈ 13 × 18 mm</td></tr>
+      <tr><th>Edge connector</th><td>75-position, 0.5 mm pitch, ENIG gold, offset front/back</td></tr>
+      <tr><th>Endurance (500 GB)</th><td>300 TBW · 5-yr limited</td></tr>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">§03</span>
+    <div class="col"><h2>Holds up close</h2></div></div>
+  <div class="col">
+    <p>The label is recreated vector artwork on a near-Lambertian laminate; the case detail is real
+    geometry. Toggle the wireframe to see the topology under the beauty pass — bevel-weighted hard-surface,
+    no n-gons, no overlapping shells, custom normals on every chamfer.</p>
+  </div>
+
+  <figure class="fig col" style="max-width:var(--wide)">
+    <div class="viewer" id="v1">
+      <img class="base" src="{{IMG:hero}}" alt="Beauty render of the 970 EVO, three-quarter view">
+      <img class="layer" data-role="wire" src="{{IMG:hero_wire}}" alt="Wireframe / clay pass, same camera">
+    </div>
+    <div class="switch" role="group" aria-label="Render pass">
+      <button type="button" data-target="v1" data-pass="beauty" aria-pressed="true">Beauty</button>
+      <button type="button" data-target="v1" data-pass="wire" aria-pressed="false">Wireframe</button>
+    </div>
+    <figcaption><b>Fig. 2</b> — 3/4 hero. Toggle: beauty ⇄ clay + wireframe, identical camera.</figcaption>
+  </figure>
+
+  <div class="grid3 col" style="max-width:var(--wide)">
+    <figure class="fig"><img src="{{IMG:conn}}" alt="Macro of the gold edge connector and M-key notch">
+      <figcaption><b>Fig. 3</b> — M-key edge, individually chamfered contacts.</figcaption></figure>
+    <figure class="fig"><img src="{{IMG:top}}" alt="Top-down view of the drive">
+      <figcaption><b>Fig. 4</b> — Top. Label sits ~4 mm off the contact field, as on the part.</figcaption></figure>
+    <figure class="fig"><img src="{{IMG:notch}}" alt="Mounting-notch end of the drive">
+      <figcaption><b>Fig. 5</b> — 2280 mount notch + keep-out ring.</figcaption></figure>
+  </div>
+
+  <figure class="fig col" style="max-width:var(--wide)">
+    <video src="{{VID:macro}}" poster="{{IMG:macro_poster}}" loop muted playsinline controls preload="none"></video>
+    <figcaption><b>Fig. 6</b> — Macro dolly along the PCB, past each semiconductor package. 52 mm equiv., f/3.2.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">§04</span>
+    <div class="col"><h2>Built to animate</h2></div></div>
+  <div class="col">
+    <p>Hard-surface, so "animate cleanly" means clean pivots and a clean hierarchy rather than deformation:
+    every part is a separately named object, origins set where they'd rotate or pull, the whole thing
+    parented under one root. A layer index on each part drives the exploded move — label, heat-spreader
+    film, gap-fill, each chip, the PCB, the M2 screw — as one Z-offset per tier, and reverses to reassemble.</p>
+  </div>
+
+  <div class="stats col" style="max-width:var(--wide)">
+    <div><div class="n">45</div><div class="l">named parts</div></div>
+    <div><div class="n">{{TRIS}}</div><div class="l">triangles</div></div>
+    <div><div class="n">1:1&nbsp;mm</div><div class="l">real scale</div></div>
+    <div><div class="n">0</div><div class="l">n-gons / stray verts</div></div>
+  </div>
+
+  <figure class="fig col" style="max-width:var(--wide)">
+    <video src="{{VID:exploded}}" poster="{{IMG:exploded_poster}}" loop muted playsinline controls preload="none"></video>
+    <figcaption><b>Fig. 7</b> — Exploded reveal. Label → heat-spreader film → gap-fill → V-NAND ×2 → DRAM + controller → PCB → mount screw.</figcaption>
+  </figure>
+  <figure class="fig col" style="max-width:var(--wide)">
+    <video src="{{VID:turntable}}" poster="{{IMG:turntable_poster}}" loop muted playsinline controls preload="none"></video>
+    <figcaption><b>Fig. 8</b> — 360° turntable, studio floor.</figcaption>
+  </figure>
+
+  <ul class="notes col">
+    <li><span class="k">Topology</span><span>Quad-friendly source; bevel modifiers with hardened normals, applied on export. Angle-split shading, no auto-smooth artefacts.</span></li>
+    <li><span class="k">Pivots</span><span>Screw origin on its own axis; label / film / PCB origins on the module mid-plane so the exploded offsets are a single Z translate per tier.</span></li>
+    <li><span class="k">Naming</span><span><span class="mono">U1_Phoenix, U2_LPDDR4, U3_VNAND, U4_VNAND, U5_PMIC, Fingers_long/short, CopperFilm, Label…</span></span></li>
+    <li><span class="k">Export</span><span>Delivered as <span class="mono">.blend</span> (editable), <span class="mono">.glb</span> and <span class="mono">.fbx</span> — triangulated, Y-up option, real-world units.</span></li>
+  </ul>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">§05</span>
+    <div class="col"><h2>Materials &amp; labels</h2></div></div>
+  <div class="col">
+    <p>PBR throughout. Black solder-mask PCB with ENIG-gold pads and white silkscreen; nickel lid on the
+    controller; black epoxy on the NAND and DRAM with laser-etched top marks; the heat-spreader label is
+    matte laminate with a copper film underside, exactly as the datasheet describes it.</p>
+    <p>All printed artwork is <b>recreated from scratch</b> — vector label, silkscreen, and chip marks drawn
+    programmatically. No manufacturer photography is used anywhere in the build.</p>
+  </div>
+  <div class="grid2 col" style="max-width:var(--wide)">
+    <figure class="fig"><img src="{{IMG:label_art}}" alt="Recreated 970 EVO label artwork, flat">
+      <figcaption><b>Fig. 9</b> — Recreated label artwork (flat).</figcaption></figure>
+    <figure class="fig"><img src="{{IMG:pcb_art}}" alt="Recreated PCB silkscreen and pad artwork, flat">
+      <figcaption><b>Fig. 10</b> — Recreated board artwork: pads, silk, designators.</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">§06</span>
+    <div class="col"><h2>What ships</h2></div></div>
+  <div class="col">
+    <p>A single component, taken to delivery standard. On a real engagement this is the unit of work —
+    scoped, modeled, textured, shot, and documented — repeated per part.</p>
+  </div>
+  <div class="deliv col" style="max-width:var(--wide)">
+    <p>Editable <span class="mono">.blend</span> with named parts and the exploded rig</p>
+    <p><span class="mono">.glb</span> + <span class="mono">.fbx</span>, triangulated, real-world scale</p>
+    <p>Hero stills at 2200&nbsp;px — 3/4, top, connector, mount end</p>
+    <p>Beauty and clay / wireframe passes, matched cameras</p>
+    <p>360° turntable — MP4</p>
+    <p>Exploded-view reveal — MP4</p>
+    <p>Macro dolly reveal — MP4</p>
+    <p>This dimensioned breakdown (print to PDF)</p>
+  </div>
+  <ul class="notes col">
+    <li><span class="k">Tooling</span><span>Blender 5.1 · Cycles + EEVEE · procedural texture authoring · ffmpeg encode</span></li>
+    <li><span class="k">Sources</span><span>Samsung 970 EVO Data Sheet Rev 1.0 · JEDEC M.2 form-factor spec · public teardown photography for component placement only</span></li>
+    <li><span class="k">Turnaround</span><span>One part at this depth: modeling + look-dev + shots in a single working pass, then revisions.</span></li>
+  </ul>
+</section>
+
+<footer>
+  <p><b>About this page.</b> A sample deliverable prepared for <b>EETech</b> in response to the
+  posting “3D Modeler — Electrical Component Models &amp; Renders.” It is the applicant’s own work
+  and is not affiliated with, authored by, or endorsed by EETech; “EETech”, “All About Circuits”
+  and “EEPower” are trademarks of their owner and appear here only to name the recipient.</p>
+  <p><b>Trademark.</b> “Samsung”, “970 EVO”, “V-NAND”, “Phoenix” and related marks are trademarks of
+  Samsung Electronics. This is a non-commercial modeling study; labels and board artwork are recreated
+  vector approximations, and no manufacturer geometry, textures, or photographs are used in the model.</p>
+  <p>A CC-BY Sketchfab asset of similar subject matter was reviewed only as a scale check and quality
+  benchmark; none of its data appears here.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+  var sw = document.querySelectorAll('.switch button');
+  sw.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var v = document.getElementById(btn.dataset.target);
+      var pass = btn.dataset.pass;
+      v.parentNode.querySelectorAll('.switch button').forEach(function(b){
+        b.setAttribute('aria-pressed', String(b.dataset.pass === pass));
+      });
+      var wire = v.querySelector('[data-role="wire"]');
+      if (wire) wire.classList.toggle('on', pass === 'wire');
+    });
+  });
+  // respect reduced-motion: leave <video> paused on its poster
+  if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var vids = document.querySelectorAll('video');
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting){ e.target.play().catch(function(){}); }
+        else { e.target.pause(); }
+      });
+    }, {threshold:0.25});
+    vids.forEach(function(v){ v.preload='auto'; io.observe(v); });
+  }
+})();
+</script>

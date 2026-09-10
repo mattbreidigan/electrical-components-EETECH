@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+
+# Blender backups
+*.blend1
+*.blend2
+
+# Intermediate render frame sequences (encoded .mp4s in deliverables/video/ are kept)
+deliverables/renders/m2_turntable/
+deliverables/renders/m2_exploded/
+deliverables/renders/m2_macro/
+deliverables/renders/m2_diag/
+
+# Local scratch / packaging
+deliverables/renders/_pagecheck/
+deliverables/renders/_timetest/
+deliverables/970EVO_package/
+deliverables/*.zip
+deliverables/_prod*.log
+
+# OS
+.DS_Store
+Thumbs.db
